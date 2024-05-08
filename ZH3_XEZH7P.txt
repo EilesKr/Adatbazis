@@ -1,0 +1,31 @@
+1. Feladat
+
+Filter: {"countries.0": "USA", "imdb.rating": {$gt: 5}}
+Project: {title: 1, countries: 1,  "imdb.rating": 1, _id: 0}
+Sort: {"imdb.rating": -1}
+
+
+2. Feladat
+
+db.users.find({email: /.com/}, {name: 1, email: 1, _id: 0})
+
+3. Feladat
+
+db.movies.aggregate({"$match": {year: {$gt: 1950}}}, {"$group": {_id: "$rated", avg: {$avg: "$runtime"}}})
+
+
+4. Feladat
+
+MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
+WHERE m.released > 1960
+RETURN p.name AS `Szereplo_neve`, m.title AS `Film_cime`, m.released AS `Megjelenes_eve`
+ORDER BY m.released DESC
+
+
+5. Feladat
+
+MATCH (p:Person)-[:DIRECTED]->(m:Movie)
+WHERE m.released < 2000
+WITH p, count(*) as `db`
+WHERE db > 1
+RETURN p.name, db
